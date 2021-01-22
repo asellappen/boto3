@@ -10,24 +10,21 @@
 #
 # ----------------------------------------------------------------------------
 language: python
+
+sudo: required
 dist: bionic
+
 arch:
   - amd64
   - ppc64le
-services:
-  - mysql
 python:
   - 3.7
   - 3.8
 
-sudo: required
 install:
   - pip install -r requirements.txt
   - travis_retry pip install tox
-  - pip install python-coveralls
-  - pip install pytest
   - python setup.py install
   - pip install --no-deps -e .
 script:
-# - python -m pytest pymysql/tests/
   - travis_retry tox
