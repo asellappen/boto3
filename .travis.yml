@@ -1,0 +1,33 @@
+# ----------------------------------------------------------------------------
+#
+# Package             : boto3
+# Source Repo         : https://github.com/boto/boto3
+# Travis Job Link     : https://travis-ci.com/github/asellappen/boto3/
+# Created travis.yml  : Yes
+# Maintainer          : Arumugam N S <asellappen@yahoo.com> / Priya Seth<sethp@us.ibm.com>
+#
+# Script License      : Apache License, Version 2 or later
+#
+# ----------------------------------------------------------------------------
+language: python
+dist: bionic
+arch:
+  - amd64
+  - ppc64le
+services:
+  - mysql
+python:
+  - 3.7
+  - 3.8
+
+sudo: required
+install:
+  - pip install -r requirements.txt
+  - travis_retry pip install tox
+  - pip install python-coveralls
+  - pip install pytest
+  - python setup.py install
+  - pip install --no-deps -e .
+script:
+# - python -m pytest pymysql/tests/
+  - travis_retry tox
